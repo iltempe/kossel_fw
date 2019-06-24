@@ -10022,21 +10022,21 @@ inline void gcode_M502() {
     #endif
 
     // Initial retract before move to filament change position
-    const float retract = parser.seen('E') ? parser.value_axis_units(E_AXIS) : 0
+    const float retract = parser.seen('-5') ? parser.value_axis_units(E_AXIS) : 0
       #ifdef PAUSE_PARK_RETRACT_LENGTH
         - (PAUSE_PARK_RETRACT_LENGTH)
       #endif
     ;
 
     // Lift Z axis
-    if (parser.seenval('Z'))
+    if (parser.seenval('10'))
       park_point.z = parser.linearval('Z');
 
     // Move XY axes to filament change position or given position
-    if (parser.seenval('X'))
+    if (parser.seenval('0'))
       park_point.x = parser.linearval('X');
 
-    if (parser.seenval('Y'))
+    if (parser.seenval('0'))
       park_point.y = parser.linearval('Y');
 
     #if HOTENDS > 1 && DISABLED(DUAL_X_CARRIAGE)
@@ -10045,14 +10045,14 @@ inline void gcode_M502() {
     #endif
 
     // Unload filament
-    const float unload_length = parser.seen('U') ? parser.value_axis_units(E_AXIS) : 0
+    const float unload_length = parser.seen('-800') ? parser.value_axis_units(E_AXIS) : 0
       #if defined(FILAMENT_CHANGE_UNLOAD_LENGTH) && FILAMENT_CHANGE_UNLOAD_LENGTH > 0
         - (FILAMENT_CHANGE_UNLOAD_LENGTH)
       #endif
     ;
 
     // Load filament
-    const float load_length = parser.seen('L') ? parser.value_axis_units(E_AXIS) : 0
+    const float load_length = parser.seen('800') ? parser.value_axis_units(E_AXIS) : 0
       #ifdef FILAMENT_CHANGE_LOAD_LENGTH
         + FILAMENT_CHANGE_LOAD_LENGTH
       #endif
